@@ -13,35 +13,16 @@ namespace ChampionshipExam
         private bool IsShow = false;
         private bool NameByTown = false;
         private bool TeamByNameAndTown = false;
-        private bool MatchInfo = false;
-
         public StartForm()
         {
             InitializeComponent();
-            NameTB.Enabled = false;
-            TownTB.Enabled = false;
-            WinsTB.Enabled = false;
-            DefeatsTB.Enabled = false;
-            DrawsTB.Enabled = false;
-            GoalsConcededTB.Enabled = false;
-            GoalsScoredTB.Enabled = false;
-            SubmitBtn.Enabled = false;
+            FieldsGB.Enabled = false;
+            RefreshTeams();
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
 
-        }
-
-        private void InfoAboutTeamsBtn_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void AddTeamBtn_Click(object sender, EventArgs e)
-        {
-            AddTeam = true;
-            Enable();
         }
 
         private void SubmitBtn_Click(object sender, EventArgs e)
@@ -62,12 +43,9 @@ namespace ChampionshipExam
                 AddTeam = false;
                 DisableAll();
                 _service.Refresh();
-            }
-            else if (RemoveTeam)
-            {
-                _service.DeleteTeam(NameTB.Text);
-                RemoveTeam = false;
-                DisableAll();
+                RefreshTeams();
+                MessageBox.Show($"Команда {team.Name} додана до бази", "Додавання команди", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
             }
             else if (TeamName)
             {
@@ -93,10 +71,6 @@ namespace ChampionshipExam
                 NameTB.Enabled = false;
                 ShowElements(_service.TeamByNameAndTown(TownTB.Text, NameTB.Text));
                 TeamByNameAndTown = false;
-            }
-            else if (MatchInfo)
-            {
-
             }
 
         }
@@ -126,30 +100,16 @@ namespace ChampionshipExam
             SubmitBtn.Enabled = true;
         }
 
-        private void DeleteTeamBtn_Click(object sender, EventArgs e)
-        {
-            RemoveTeam = true;
-            NameTB.Enabled = true;
-            SubmitBtn.Enabled = true;
-        }
-
         private void DisableAll()
         {
-            NameTB.Enabled = false;
+            FieldsGB.Enabled = false;
             NameTB.Text = null;
-            TownTB.Enabled = false;
             TownTB.Text = null;
-            WinsTB.Enabled = false;
             WinsTB.Text = null;
-            DefeatsTB.Enabled = false;
             DefeatsTB.Text = null;
-            DrawsTB.Enabled = false;
             DrawsTB.Text = null;
-            GoalsConcededTB.Enabled = false;
             GoalsConcededTB.Text = null;
-            GoalsScoredTB.Enabled = false;
             GoalsScoredTB.Text = null;
-            SubmitBtn.Enabled = false;
         }
 
         private void InfoByTeamNameBtn_Click(object sender, EventArgs e)
@@ -173,19 +133,21 @@ namespace ChampionshipExam
             IsShow = false;
         }
 
+        private void RefreshTeams()
+        {
+            _service.Refresh();
+            TeamCB.Items.Clear();
+            foreach (var team in _service.GetTeams())
+            {
+                TeamCB.Items.Add(team.Name);
+            }
+        }
+
         private void TeamByTownNameBtn_Click(object sender, EventArgs e)
         {
             NameByTown = true;
             TownTB.Enabled = true;
             SubmitBtn.Enabled = true;
-        }
-
-        private void TeamByNameAndTownBtn_Click(object sender, EventArgs e)
-        {
-            TeamByNameAndTown = true;
-            TownTB.Enabled = true;
-            SubmitBtn.Enabled = true;
-            NameTB.Enabled = true;
         }
 
         private void TeamWithMostWinsBtn_Click(object sender, EventArgs e)
@@ -223,5 +185,61 @@ namespace ChampionshipExam
             ShowElements(_service.WorstTeamByLoosingGoals());
         }
 
+        private void TeamCB_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (TeamCB.SelectedIndex != -1)
+            {
+                ShowElements(_service.TeamByName(TeamCB.Items[TeamCB.SelectedIndex].ToString()));
+            }
+        }
+
+        private void StartForm_Click(object sender, EventArgs e)
+        {
+            TeamCB.SelectedIndex = -1;
+            DisableAll();
+        }
+
+        private void DeleteTeamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (TeamCB.SelectedIndex != -1)
+            {
+                _service.DeleteTeam(TeamCB.Items[TeamCB.SelectedIndex].ToString());
+                MessageBox.Show($"Команда {TeamCB.Items[TeamCB.SelectedIndex]} видалена з бази", "Видалення команди", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                TeamCB.SelectedIndex = -1;
+                RefreshTeams();
+            }
+        }
+
+        private void AddTeamToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AddTeam = true;
+            FieldsGB.Enabled = true;
+        }
+
+        private void TeamWithTheMostWinsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TeamMessage(_service.BestTeam());
+        }
+
+        private void TeamMessage(Team team)
+        {
+            MessageBox.Show($"Назва команди: {team.Name}\n" +
+                            $"Місто з якого команда: {team.Town}\n" +
+                            $"Кількість перемог: {team.Wins}\n" +
+                            $"Кількість поразок: {team.Defeats}\n" +
+                            $"Кількість ігор зіграних в нічию: {team.Draws}\n" +
+                            $"Кількість забитих голів: {team.GoalsScored}\n" +
+                            $"Кількість пропущених голів: {team.GoalsConceded}",
+                            "Інформація про команду",
+                            MessageBoxButtons.OK);
+        }
+
+        private void InfoAboutTeamNAmeAndTownNameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TeamByNameAndTown = true;
+            TownTB.Enabled = true;
+            SubmitBtn.Enabled = true;
+            NameTB.Enabled = true;
+        }
     }
 }

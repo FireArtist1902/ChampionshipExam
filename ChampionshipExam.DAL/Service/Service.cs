@@ -11,6 +11,13 @@ namespace ChampionshipExam
 
         private List<Team> teams = new List<Team>();
 
+
+        public List<Team> GetTeams()
+        {
+            return teams;
+        }
+
+
         public Service()
         {
             matches = _repository.GetMatches().ToList();
