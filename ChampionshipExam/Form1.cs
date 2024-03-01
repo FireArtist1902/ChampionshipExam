@@ -112,13 +112,6 @@ namespace ChampionshipExam
             GoalsScoredTB.Text = null;
         }
 
-        private void InfoByTeamNameBtn_Click(object sender, EventArgs e)
-        {
-            TeamName = true;
-            NameTB.Enabled = true;
-            SubmitBtn.Enabled = true;
-        }
-
         private void QuickShow()
         {
             Enable();
@@ -141,49 +134,6 @@ namespace ChampionshipExam
             {
                 TeamCB.Items.Add(team.Name);
             }
-        }
-
-        private void TeamByTownNameBtn_Click(object sender, EventArgs e)
-        {
-            NameByTown = true;
-            TownTB.Enabled = true;
-            SubmitBtn.Enabled = true;
-        }
-
-
-        private void TeamWithMostWinsBtn_Click(object sender, EventArgs e)
-        {
-            IsShow = true;
-            SubmitBtn.Enabled = true;
-            ShowElements(_service.BestTeam());
-        }
-
-        private void TeamByMostDefeatsBtn_Click(object sender, EventArgs e)
-        {
-            IsShow = true;
-            SubmitBtn.Enabled = true;
-            ShowElements(_service.WorstTeam());
-        }
-
-        private void TeamByMostDrawsBtn_Click(object sender, EventArgs e)
-        {
-            IsShow = true;
-            SubmitBtn.Enabled = true;
-            ShowElements(_service.TeamWithMostDraws());
-        }
-
-        private void TEamByMostGoalsBtn_Click(object sender, EventArgs e)
-        {
-            IsShow = true;
-            SubmitBtn.Enabled = true;
-            ShowElements(_service.BeastTeamByGoals());
-        }
-
-        private void TEamByMoreGoalsConcededBtn_Click(object sender, EventArgs e)
-        {
-            IsShow = true;
-            SubmitBtn.Enabled = true;
-            ShowElements(_service.WorstTeamByLoosingGoals());
         }
 
         private void TeamCB_SelectedIndexChanged_1(object sender, EventArgs e)
@@ -241,6 +191,34 @@ namespace ChampionshipExam
             TownTB.Enabled = true;
             SubmitBtn.Enabled = true;
             NameTB.Enabled = true;
+        }
+
+        private void TeamWithTheMostLossesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IsShow = true;
+            SubmitBtn.Enabled = true;
+            ShowElements(_service.WorstTeam());
+        }
+
+        private void TeamWithTheMostDrawsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IsShow = true;
+            SubmitBtn.Enabled = true;
+            ShowElements(_service.TeamWithMostDraws());
+        }
+
+        private void TeamWithTheMostScoredGoalsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IsShow = true;
+            SubmitBtn.Enabled = true;
+            ShowElements(_service.BeastTeamByGoals());
+        }
+
+        private void TeamWithTheMostConcededGoalsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IsShow = true;
+            SubmitBtn.Enabled = true;
+            ShowElements(_service.WorstTeamByLoosingGoals());
         }
     }
 }

@@ -191,24 +191,28 @@
             TeamWithTheMostLossesToolStripMenuItem.Name = "TeamWithTheMostLossesToolStripMenuItem";
             TeamWithTheMostLossesToolStripMenuItem.Size = new Size(455, 26);
             TeamWithTheMostLossesToolStripMenuItem.Text = "Команда з найбільшою кількістю поразок";
+            TeamWithTheMostLossesToolStripMenuItem.Click += TeamWithTheMostLossesToolStripMenuItem_Click;
             // 
             // TeamWithTheMostDrawsToolStripMenuItem
             // 
             TeamWithTheMostDrawsToolStripMenuItem.Name = "TeamWithTheMostDrawsToolStripMenuItem";
             TeamWithTheMostDrawsToolStripMenuItem.Size = new Size(455, 26);
             TeamWithTheMostDrawsToolStripMenuItem.Text = "Команда з найбільшою кількістю ігор у нічию";
+            TeamWithTheMostDrawsToolStripMenuItem.Click += TeamWithTheMostDrawsToolStripMenuItem_Click;
             // 
             // TeamWithTheMostScoredGoalsToolStripMenuItem
             // 
             TeamWithTheMostScoredGoalsToolStripMenuItem.Name = "TeamWithTheMostScoredGoalsToolStripMenuItem";
             TeamWithTheMostScoredGoalsToolStripMenuItem.Size = new Size(455, 26);
             TeamWithTheMostScoredGoalsToolStripMenuItem.Text = "Команда з найбільшою кількістю забитих голів";
+            TeamWithTheMostScoredGoalsToolStripMenuItem.Click += TeamWithTheMostScoredGoalsToolStripMenuItem_Click;
             // 
             // TeamWithTheMostConcededGoalsToolStripMenuItem
             // 
             TeamWithTheMostConcededGoalsToolStripMenuItem.Name = "TeamWithTheMostConcededGoalsToolStripMenuItem";
             TeamWithTheMostConcededGoalsToolStripMenuItem.Size = new Size(455, 26);
             TeamWithTheMostConcededGoalsToolStripMenuItem.Text = "Команда з найбільшою кількістю пропущених голів";
+            TeamWithTheMostConcededGoalsToolStripMenuItem.Click += TeamWithTheMostConcededGoalsToolStripMenuItem_Click;
             // 
             // menuStrip1
             // 
